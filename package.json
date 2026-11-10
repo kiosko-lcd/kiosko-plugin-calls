@@ -10,7 +10,7 @@
     "kiosko-plugin",
     "lcd",
     "widgets",
-    "calls"
+    "system"
   ],
   "homepage": "https://github.com/kiosko-lcd/kiosko-plugin-calls#readme",
   "repository": {

@@ -44,13 +44,19 @@ export function track(tr: Tracker, app: string | null, now: number, graceMs: num
 const tracker: Tracker = { since: null, lastSeen: 0 };
 const INTERVAL = 15_000;
 
-export type Pactl = (args: string[]) => Promise<string>;
+export type Pactl = (args: string[], signal?: AbortSignal) => Promise<string>;
 
-const pactl: Pactl = async (args) => (await run('pactl', args, { timeout: 3000, env: { ...process.env, LC_ALL: 'C' } })).stdout;
+const pactl: Pactl = async (args, signal) => (await run('pactl', args, { timeout: 3000, env: { ...process.env, LC_ALL: 'C' }, ...(signal ? { signal } : {}) })).stdout;
 
-export async function readCall(o: { apps: string[]; now: number; exec?: Pactl; os?: string; state?: Tracker }): Promise<CallState> {
+/**
+ * How long the mic may be closed without ending the call (switching
+ * devices reopens it): two and a half reads, whatever the interval.
+ */
+export const graceFor = (intervalMs: number) => 2.5 * intervalMs;
+
+export async function readCall(o: { apps: string[]; now: number; intervalMs?: number; signal?: AbortSignal; exec?: Pactl; os?: string; state?: Tracker }): Promise<CallState> {
   if ((o.os ?? platform()) !== 'linux') return { available: false, active: false };
-  const exec = o.exec ?? pactl;
+  const exec: Pactl = o.exec ?? ((args) => pactl(args, o.signal));
   let outs: string, srcs: string;
   try {
     [outs, srcs] = await Promise.all([exec(['list', 'source-outputs']), exec(['list', 'short', 'sources'])]);
@@ -58,7 +64,7 @@ export async function readCall(o: { apps: string[]; now: number; exec?: Pactl; o
     return { available: false, active: false };
   }
   const app = callApp(parseSourceOutputs(outs), monitorSources(srcs), o.apps);
-  return track(o.state ?? tracker, app, o.now, 2.5 * INTERVAL);
+  return track(o.state ?? tracker, app, o.now, graceFor(o.intervalMs ?? INTERVAL));
 }
 
 export function demoCall(now: number): CallState {
@@ -80,6 +86,8 @@ export const active = defineSource({
     }),
   }),
   intervalMs: INTERVAL,
-  read: ({ options, now }) => readCall({ apps: options.apps, now }),
+  // Two pactl calls that give up after 3 s each.
+  timeoutMs: 10_000,
+  read: ({ options, now, intervalMs, signal }) => readCall({ apps: options.apps, now, intervalMs, signal }),
   demo: ({ now }) => demoCall(now),
 });

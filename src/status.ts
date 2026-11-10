@@ -3,26 +3,25 @@
  * holds the microphone; dark the rest of the time (darkness is the normal
  * state of the semaphore), or out of the rotation with `onlyDuringCall`.
  */
-import { defineWidget, t, type Localized } from '@kiosko/sdk';
+import { defineWidget, t, type Formatters, type Localized } from '@kiosko/sdk';
 import type { CallState } from './active.ts';
 import { demoCall } from './active.ts';
 
 const SOURCE = 'calls/active';
 
-/** "12 min", "1 h 05". */
-export function elapsed(ms: number): string {
-  const min = Math.max(0, Math.floor(ms / 60_000));
-  if (min < 60) return `${min} min`;
-  return `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
-}
 
-/** The line to paint, or null for a dark tile. */
-export function statusLine(call: CallState | undefined, now: number, showApp: boolean): { text: Localized; sub?: string } | null {
+/**
+ * The line to paint, or null for a dark tile: "On a call · 12 min" (or the
+ * user's `label`), with the app under it when `showApp`.
+ */
+export function statusLine(call: CallState | undefined, now: number, o: { showApp: boolean; label: string }, fmt: Pick<Formatters, 'duration'>): { text: Localized; sub?: string } | null {
   if (!call) return null;
   if (!call.available) return { text: { en: 'Calls unavailable', es: 'Llamadas no disponibles' } };
   if (!call.active) return null;
-  const dur = call.since !== undefined ? ` · ${elapsed(now - call.since)}` : '';
-  return { text: { en: `On a call${dur}`, es: `En llamada${dur}` }, ...(showApp && call.app ? { sub: call.app } : {}) };
+  const dur = call.since !== undefined ? ` · ${fmt.duration(now - call.since)}` : '';
+  const label = o.label.trim();
+  const text: Localized = label ? `${label}${dur}` : { en: `On a call${dur}`, es: `En llamada${dur}` };
+  return { text, ...(o.showApp && call.app ? { sub: call.app } : {}) };
 }
 
 const callOf = (sources: Record<string, unknown>) => sources[SOURCE] as CallState | undefined;
@@ -40,17 +39,19 @@ export const status = defineWidget({
   size: { min: { w: 140, h: 40 }, preferred: { w: 320, h: 90 } },
   sources: [SOURCE],
   options: t.object({
+    label: t.string({ placeholder: 'ON AIR', maxLength: 40, label: { en: 'Text', es: 'Texto' }, help: { en: 'Empty = "On a call". "ON AIR", "Do not disturb"… for whoever walks in.', es: 'Vacío = «En llamada». «ON AIR», «No molestar»… para quien entre en el despacho.' } }),
     showApp: t.boolean({ default: true, label: { en: 'Show the app', es: 'Mostrar la aplicación' }, help: { en: 'Which app holds the mic (Teams, Chrome…).', es: 'Qué aplicación tiene el micro (Teams, Chrome…).' } }),
     onlyDuringCall: t.boolean({ label: { en: 'Only during a call', es: 'Sólo durante una llamada' }, help: { en: 'Skipped in its cell rotation when there is no call.', es: 'Sale del turno de su celda cuando no hay llamada.' } }),
-    takeOver: t.boolean({ label: { en: 'Take the cell over during a call', es: 'Quedarse la celda durante la llamada' }, help: { en: 'Marks the widget urgent while the call lasts, so it stays on screen.', es: 'Marca el widget como urgente mientras dura la llamada, para que se quede en pantalla.' } }),
   }),
   redraw: ({ sources }) => (callOf(sources)?.active ? 'minute' : 'never'),
   visible: ({ options, sources }) => !options.onlyDuringCall || Boolean(callOf(sources)?.active),
-  urgent: ({ options, sources }) => options.takeOver && Boolean(callOf(sources)?.active),
+  // Urgent for the whole call; keeping the tile for it is the user's choice (off by default).
+  urgent: ({ sources }) => Boolean(callOf(sources)?.active),
+  takeOver: false,
   idle: ({ sources }) => !callOf(sources)?.active,
   demo: ({ now }) => ({ sources: { [SOURCE]: demoCall(now) } }),
-  render(g, { options, sources, now, box, theme, kit, t: tr }) {
-    const line = statusLine(callOf(sources), now, options.showApp);
+  render(g, { options, sources, now, box, theme, kit, t: tr, fmt }) {
+    const line = statusLine(callOf(sources), now, options, fmt);
     if (!line) return;
     const { colors, fonts } = theme;
     const lit = Boolean(callOf(sources)?.active);
