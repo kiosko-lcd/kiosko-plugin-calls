@@ -1,0 +1,225 @@
+{
+  "manifest": 1,
+  "id": "calls",
+  "package": "kiosko-plugin-calls",
+  "name": {
+    "en": "Calls",
+    "es": "Llamadas"
+  },
+  "version": "0.2.0",
+  "description": {
+    "en": "Detects video calls by the open microphone, even muted, and shows an on-air light.",
+    "es": "Detecta las videollamadas por el micrófono abierto, aunque esté silenciado, y muestra un piloto de «en el aire»."
+  },
+  "author": "Kiosko",
+  "license": "MIT",
+  "homepage": "https://github.com/kiosko-lcd/kiosko-plugin-calls#readme",
+  "repository": "https://github.com/kiosko-lcd/kiosko-plugin-calls.git",
+  "icon": "phone",
+  "sdk": "^0.2.0",
+  "platforms": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "languages": [
+    "en",
+    "es"
+  ],
+  "categories": [
+    "system"
+  ],
+  "tags": [
+    "call",
+    "microphone",
+    "teams",
+    "meeting"
+  ],
+  "permissions": {
+    "exec": [
+      "pactl"
+    ],
+    "devices": [
+      "audio"
+    ]
+  },
+  "riskyOptions": [],
+  "requires": [],
+  "optional": [],
+  "widgets": [
+    {
+      "type": "calls/status",
+      "name": {
+        "en": "On a call",
+        "es": "En llamada"
+      },
+      "description": {
+        "en": "An on-air light: lit while an app holds the microphone (even muted), with how long the call has lasted. Dark otherwise.",
+        "es": "Un piloto de «en el aire»: encendido mientras una aplicación tiene el micrófono abierto (aunque esté silenciado), con lo que dura la llamada. Apagado el resto del tiempo."
+      },
+      "icon": "phone",
+      "category": "system",
+      "tags": [
+        "call",
+        "microphone",
+        "teams",
+        "meeting"
+      ],
+      "size": {
+        "min": {
+          "w": 140,
+          "h": 40
+        },
+        "preferred": {
+          "w": 320,
+          "h": 90
+        }
+      },
+      "chrome": "card",
+      "sources": [
+        "calls/active"
+      ],
+      "options": {
+        "default": {
+          "label": "",
+          "showApp": true,
+          "onlyDuringCall": false
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "label": {
+            "title": "Text",
+            "description": "Empty = \"On a call\". \"ON AIR\", \"Do not disturb\"… for whoever walks in.",
+            "default": "",
+            "x-ui": {
+              "label": {
+                "en": "Text",
+                "es": "Texto"
+              },
+              "help": {
+                "en": "Empty = \"On a call\". \"ON AIR\", \"Do not disturb\"… for whoever walks in.",
+                "es": "Vacío = «En llamada». «ON AIR», «No molestar»… para quien entre en el despacho."
+              },
+              "placeholder": "ON AIR"
+            },
+            "type": "string",
+            "maxLength": 40
+          },
+          "showApp": {
+            "title": "Show the app",
+            "description": "Which app holds the mic (Teams, Chrome…).",
+            "default": true,
+            "x-ui": {
+              "label": {
+                "en": "Show the app",
+                "es": "Mostrar la aplicación"
+              },
+              "help": {
+                "en": "Which app holds the mic (Teams, Chrome…).",
+                "es": "Qué aplicación tiene el micro (Teams, Chrome…)."
+              }
+            },
+            "type": "boolean"
+          },
+          "onlyDuringCall": {
+            "title": "Only during a call",
+            "description": "Skipped in its cell rotation when there is no call.",
+            "default": false,
+            "x-ui": {
+              "label": {
+                "en": "Only during a call",
+                "es": "Sólo durante una llamada"
+              },
+              "help": {
+                "en": "Skipped in its cell rotation when there is no call.",
+                "es": "Sale del turno de su celda cuando no hay llamada."
+              }
+            },
+            "type": "boolean"
+          }
+        }
+      },
+      "screenshot": "docs/status.png",
+      "animated": false,
+      "urgent": true
+    }
+  ],
+  "sources": [
+    {
+      "type": "calls/active",
+      "name": {
+        "en": "Video call",
+        "es": "Videollamada"
+      },
+      "description": {
+        "en": "Whether you are on a call: an app (browser, Teams, Zoom…) holding the microphone open, even muted. Linux with PulseAudio or PipeWire.",
+        "es": "Si estás en una llamada: una aplicación (navegador, Teams, Zoom…) con el micrófono abierto, aunque esté silenciado. Linux con PulseAudio o PipeWire."
+      },
+      "polled": true,
+      "intervalMs": 15000,
+      "options": {
+        "default": {
+          "apps": [
+            "chrome",
+            "google-chrome",
+            "msedge",
+            "microsoft-edge",
+            "chromium",
+            "brave",
+            "firefox",
+            "teams",
+            "teams-for-linux",
+            "zoom",
+            "slack",
+            "discord",
+            "skypeforlinux"
+          ]
+        },
+        "x-ui": {},
+        "type": "object",
+        "properties": {
+          "apps": {
+            "title": "Apps that count",
+            "description": "Process names. Empty = any app recording from a microphone.",
+            "default": [
+              "chrome",
+              "google-chrome",
+              "msedge",
+              "microsoft-edge",
+              "chromium",
+              "brave",
+              "firefox",
+              "teams",
+              "teams-for-linux",
+              "zoom",
+              "slack",
+              "discord",
+              "skypeforlinux"
+            ],
+            "x-ui": {
+              "label": {
+                "en": "Apps that count",
+                "es": "Aplicaciones que cuentan"
+              },
+              "help": {
+                "en": "Process names. Empty = any app recording from a microphone.",
+                "es": "Nombres de proceso. Vacío = cualquier aplicación que grabe de un micrófono."
+              }
+            },
+            "type": "array",
+            "items": {
+              "default": "",
+              "x-ui": {
+                "placeholder": "firefox"
+              },
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "interludes": [],
+  "templates": []
+}
