@@ -20,6 +20,11 @@ npm install --prefix ~/.config/kiosko/plugins kiosko-plugin-calls
 
 - Linux with PulseAudio or PipeWire (`pipewire-pulse`) and `pactl`. Elsewhere the source reports `available: false` and the widget says "Calls unavailable".
 
+## What it does on your machine
+
+- **Runs**: `pactl`.
+- **Devices**: audio.
+
 ## Widgets
 
 ### On a call — `calls/status`
