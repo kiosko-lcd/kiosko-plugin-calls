@@ -60,9 +60,9 @@ test('status line: ctx.fmt durations and an optional text of your own', () => {
   const call = { available: true, active: true, app: 'Teams', since: 0 };
   assert.equal(statusLine(undefined, 0, o, fmt), null);
   assert.equal(statusLine({ available: true, active: false }, 0, o, fmt), null);
-  assert.deepEqual(statusLine({ available: false, active: false }, 0, o, fmt)!.text, { en: 'Calls unavailable', es: 'Llamadas no disponibles', 'zh-Hant': '無法取得通話狀態', 'zh-Hans': '无法获取通话状态' });
-  assert.deepEqual(statusLine(call, 12 * 60_000 + 5000, o, fmt), { text: { en: 'On a call · 12 min', es: 'En llamada · 12 min', 'zh-Hant': '通話中 · 12 min', 'zh-Hans': '通话中 · 12 min' }, sub: 'Teams' });
-  assert.deepEqual(statusLine(call, 65 * 60_000, o, fmt)!.text, { en: 'On a call · 1 h 05', es: 'En llamada · 1 h 05', 'zh-Hant': '通話中 · 1 h 05', 'zh-Hans': '通话中 · 1 h 05' });
+  assert.deepEqual(statusLine({ available: false, active: false }, 0, o, fmt)!.text, { en: 'Calls unavailable', es: 'Llamadas no disponibles', de: 'Anrufe nicht verfügbar', 'zh-Hant': '無法取得通話狀態', 'zh-Hans': '无法获取通话状态' });
+  assert.deepEqual(statusLine(call, 12 * 60_000 + 5000, o, fmt), { text: { en: 'On a call · 12 min', es: 'En llamada · 12 min', de: 'Im Gespräch · 12 min', 'zh-Hant': '通話中 · 12 min', 'zh-Hans': '通话中 · 12 min' }, sub: 'Teams' });
+  assert.deepEqual(statusLine(call, 65 * 60_000, o, fmt)!.text, { en: 'On a call · 1 h 05', es: 'En llamada · 1 h 05', de: 'Im Gespräch · 1 h 05', 'zh-Hant': '通話中 · 1 h 05', 'zh-Hans': '通话中 · 1 h 05' });
   assert.equal(statusLine(call, 0, { ...o, showApp: false }, fmt)!.sub, undefined);
   assert.equal(statusLine(call, 60_000, { ...o, label: ' ON AIR ' }, fmt)!.text, 'ON AIR · 1 min');
 });
