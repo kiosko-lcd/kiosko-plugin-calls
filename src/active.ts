@@ -73,16 +73,18 @@ export function demoCall(now: number): CallState {
 
 export const active = defineSource({
   id: 'active',
-  name: { en: 'Video call', es: 'Videollamada' },
+  name: { en: 'Video call', es: 'Videollamada', 'zh-Hant': '視訊通話', 'zh-Hans': '视频通话' },
   description: {
     en: 'Whether you are on a call: an app (browser, Teams, Zoom…) holding the microphone open, even muted. Linux with PulseAudio or PipeWire.',
     es: 'Si estás en una llamada: una aplicación (navegador, Teams, Zoom…) con el micrófono abierto, aunque esté silenciado. Linux con PulseAudio o PipeWire.',
+    'zh-Hant': '你是否正在通話：有應用程式（瀏覽器、Teams、Zoom…）開著麥克風，即使已靜音。適用於使用 PulseAudio 或 PipeWire 的 Linux。',
+    'zh-Hans': '你是否正在通话：有应用（浏览器、Teams、Zoom…）占用着麦克风，即使已静音。适用于使用 PulseAudio 或 PipeWire 的 Linux。',
   },
   options: t.object({
     apps: t.list(t.string({ placeholder: 'firefox' }), {
       default: CALL_BINARIES,
-      label: { en: 'Apps that count', es: 'Aplicaciones que cuentan' },
-      help: { en: 'Process names. Empty = any app recording from a microphone.', es: 'Nombres de proceso. Vacío = cualquier aplicación que grabe de un micrófono.' },
+      label: { en: 'Apps that count', es: 'Aplicaciones que cuentan', 'zh-Hant': '計入的應用程式', 'zh-Hans': '计入的应用' },
+      help: { en: 'Process names. Empty = any app recording from a microphone.', es: 'Nombres de proceso. Vacío = cualquier aplicación que grabe de un micrófono.', 'zh-Hant': '處理程序名稱。留空 = 任何從麥克風錄音的應用程式。', 'zh-Hans': '进程名称。留空 = 任何从麦克风录音的应用。' },
     }),
   }),
   intervalMs: INTERVAL,
