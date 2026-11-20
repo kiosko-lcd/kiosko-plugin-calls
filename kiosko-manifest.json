@@ -5,6 +5,7 @@
   "name": {
     "en": "Calls",
     "es": "Llamadas",
+    "de": "Anrufe",
     "zh-Hant": "通話",
     "zh-Hans": "通话"
   },
@@ -12,6 +13,7 @@
   "description": {
     "en": "Detects video calls by the open microphone, even muted, and shows an on-air light.",
     "es": "Detecta las videollamadas por el micrófono abierto, aunque esté silenciado, y muestra un piloto de «en el aire».",
+    "de": "Erkennt Videoanrufe am offenen Mikrofon, auch stummgeschaltet, und zeigt ein „On Air“-Licht.",
     "zh-Hant": "依麥克風是否開啟（即使已靜音）偵測視訊通話，並顯示「通話中」指示燈。",
     "zh-Hans": "根据麦克风是否打开（即使已静音）检测视频通话，并显示“通话中”指示灯。"
   },
@@ -29,6 +31,7 @@
   "languages": [
     "en",
     "es",
+    "de",
     "zh-Hant",
     "zh-Hans"
   ],
@@ -58,12 +61,14 @@
       "name": {
         "en": "On a call",
         "es": "En llamada",
+        "de": "Im Gespräch",
         "zh-Hant": "通話中",
         "zh-Hans": "通话中"
       },
       "description": {
         "en": "An on-air light: lit while an app holds the microphone (even muted), with how long the call has lasted. Dark otherwise.",
         "es": "Un piloto de «en el aire»: encendido mientras una aplicación tiene el micrófono abierto (aunque esté silenciado), con lo que dura la llamada. Apagado el resto del tiempo.",
+        "de": "Ein „On Air“-Licht: leuchtet, solange eine App das Mikrofon belegt (auch stummgeschaltet), und zeigt, wie lange das Gespräch schon dauert. Sonst dunkel.",
         "zh-Hant": "「通話中」指示燈：有應用程式佔用麥克風時亮起（即使已靜音），並顯示通話已持續多久。其他時候熄滅。",
         "zh-Hans": "“通话中”指示灯：有应用占用麦克风时亮起（即使已静音），并显示通话已持续多久。其他时候熄灭。"
       },
@@ -106,12 +111,14 @@
               "label": {
                 "en": "Text",
                 "es": "Texto",
+                "de": "Text",
                 "zh-Hant": "文字",
                 "zh-Hans": "文本"
               },
               "help": {
                 "en": "Empty = \"On a call\". \"ON AIR\", \"Do not disturb\"… for whoever walks in.",
                 "es": "Vacío = «En llamada». «ON AIR», «No molestar»… para quien entre en el despacho.",
+                "de": "Leer = „Im Gespräch“. „ON AIR“, „Bitte nicht stören“… für alle, die hereinkommen.",
                 "zh-Hant": "留空 = 「通話中」。也可改成「ON AIR」、「請勿打擾」…，給走進來的人看。",
                 "zh-Hans": "留空 = “通话中”。也可改成“ON AIR”“请勿打扰”…，给进门的人看。"
               },
@@ -128,12 +135,14 @@
               "label": {
                 "en": "Show the app",
                 "es": "Mostrar la aplicación",
+                "de": "App anzeigen",
                 "zh-Hant": "顯示應用程式",
                 "zh-Hans": "显示应用"
               },
               "help": {
                 "en": "Which app holds the mic (Teams, Chrome…).",
                 "es": "Qué aplicación tiene el micro (Teams, Chrome…).",
+                "de": "Welche App das Mikrofon belegt (Teams, Chrome…).",
                 "zh-Hant": "哪個應用程式佔用麥克風（Teams、Chrome…）。",
                 "zh-Hans": "哪个应用占用麦克风（Teams、Chrome…）。"
               }
@@ -148,12 +157,14 @@
               "label": {
                 "en": "Only during a call",
                 "es": "Sólo durante una llamada",
+                "de": "Nur während eines Gesprächs",
                 "zh-Hant": "僅在通話時",
                 "zh-Hans": "仅在通话时"
               },
               "help": {
                 "en": "Skipped in its cell rotation when there is no call.",
                 "es": "Sale del turno de su celda cuando no hay llamada.",
+                "de": "Wird in der Rotation seiner Zelle übersprungen, solange kein Gespräch läuft.",
                 "zh-Hant": "沒有通話時，在格位輪播中略過。",
                 "zh-Hans": "没有通话时，在格子轮播中跳过。"
               }
@@ -173,12 +184,14 @@
       "name": {
         "en": "Video call",
         "es": "Videollamada",
+        "de": "Videoanruf",
         "zh-Hant": "視訊通話",
         "zh-Hans": "视频通话"
       },
       "description": {
         "en": "Whether you are on a call: an app (browser, Teams, Zoom…) holding the microphone open, even muted. Linux with PulseAudio or PipeWire.",
         "es": "Si estás en una llamada: una aplicación (navegador, Teams, Zoom…) con el micrófono abierto, aunque esté silenciado. Linux con PulseAudio o PipeWire.",
+        "de": "Ob du gerade telefonierst: Eine App (Browser, Teams, Zoom…) hält das Mikrofon offen, auch stummgeschaltet. Linux mit PulseAudio oder PipeWire.",
         "zh-Hant": "你是否正在通話：有應用程式（瀏覽器、Teams、Zoom…）開著麥克風，即使已靜音。適用於使用 PulseAudio 或 PipeWire 的 Linux。",
         "zh-Hans": "你是否正在通话：有应用（浏览器、Teams、Zoom…）占用着麦克风，即使已静音。适用于使用 PulseAudio 或 PipeWire 的 Linux。"
       },
@@ -227,12 +240,14 @@
               "label": {
                 "en": "Apps that count",
                 "es": "Aplicaciones que cuentan",
+                "de": "Berücksichtigte Apps",
                 "zh-Hant": "計入的應用程式",
                 "zh-Hans": "计入的应用"
               },
               "help": {
                 "en": "Process names. Empty = any app recording from a microphone.",
                 "es": "Nombres de proceso. Vacío = cualquier aplicación que grabe de un micrófono.",
+                "de": "Prozessnamen. Leer = jede App, die von einem Mikrofon aufnimmt.",
                 "zh-Hant": "處理程序名稱。留空 = 任何從麥克風錄音的應用程式。",
                 "zh-Hans": "进程名称。留空 = 任何从麦克风录音的应用。"
               }
