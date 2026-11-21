@@ -12,7 +12,7 @@ export type { CallState } from './active.ts';
 export default definePlugin({
   id: 'calls',
   name: { en: 'Calls', es: 'Llamadas', de: 'Anrufe', 'zh-Hant': '通話', 'zh-Hans': '通话' },
-  version: '0.2.1',
+  version: '0.2.2',
   languages: ['en', 'es', 'de', 'zh-Hant', 'zh-Hans'],
   sdk: '^0.2.0',
   permissions: { exec: ['pactl'], devices: ['audio'] },

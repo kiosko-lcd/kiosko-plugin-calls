@@ -9,7 +9,7 @@
     "zh-Hant": "通話",
     "zh-Hans": "通话"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": {
     "en": "Detects video calls by the open microphone, even muted, and shows an on-air light.",
     "es": "Detecta las videollamadas por el micrófono abierto, aunque esté silenciado, y muestra un piloto de «en el aire».",
@@ -266,5 +266,9 @@
     }
   ],
   "interludes": [],
-  "templates": []
+  "templates": [],
+  "support": {
+    "issues": "https://github.com/kiosko-lcd/kiosko-plugin-calls/issues",
+    "docs": "https://github.com/kiosko-lcd/kiosko-plugin-calls#readme"
+  }
 }
