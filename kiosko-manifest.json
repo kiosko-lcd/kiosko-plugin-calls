@@ -9,7 +9,7 @@
     "zh-Hant": "通話",
     "zh-Hans": "通话"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": {
     "en": "Detects video calls by the open microphone, even muted, and shows an on-air light.",
     "es": "Detecta las videollamadas por el micrófono abierto, aunque esté silenciado, y muestra un piloto de «en el aire».",
@@ -165,7 +165,7 @@
                 "en": "Skipped in its cell rotation when there is no call.",
                 "es": "Sale del turno de su celda cuando no hay llamada.",
                 "de": "Wird in der Rotation seiner Zelle übersprungen, solange kein Gespräch läuft.",
-                "zh-Hant": "沒有通話時，在格位輪播中略過。",
+                "zh-Hant": "沒有通話時，在方格輪播中略過。",
                 "zh-Hans": "没有通话时，在格子轮播中跳过。"
               }
             },
